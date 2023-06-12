@@ -6,7 +6,7 @@ authors = ["Alexander Hyll <alexander@hyll.nu>"]
 
 [dependencies]
 serde = { version = "1", features = ["derive"] }
-tokio = { version = "1", features = ["rt-multi-thread"] }
+tokio = { version = "1", features = ["full"] }
 thiserror = "1"
 toml = "0"
 tracing = { version = "0", features = ["log"] }
