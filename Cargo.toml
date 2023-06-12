@@ -9,6 +9,7 @@ serde = { version = "1", features = ["derive"] }
 tokio = { version = "1", features = ["rt-multi-thread"] }
 thiserror = "1"
 toml = "0"
+tracing = { version = "0", features = ["log"] }
 
 [lib]
 path = "src/lib.rs"
@@ -18,7 +19,7 @@ path = "src/main.rs"
 name = "template"
 
 [dev-dependencies]
-criterion = {version = "0", features = ["async_tokio"]}
+criterion = { version = "0", features = ["async_tokio"] }
 
 [[bench]]
 name = "lib_benches"
