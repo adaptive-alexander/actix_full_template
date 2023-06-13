@@ -1,5 +1,5 @@
-use template::prelude::*;
 use clap::Parser;
+use template::prelude::*;
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]

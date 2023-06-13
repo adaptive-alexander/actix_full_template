@@ -1,12 +1,10 @@
-mod tests;
-mod error;
 mod config;
-pub mod prelude;
+mod error;
 mod logging;
+pub mod prelude;
+mod tests;
 
-pub fn sync_test(_inp: &str){}
+pub fn sync_test(_inp: &str) {}
 
-#[tracing::instrument(
-    name = "Async test subscriber",
-)]
-pub async fn async_test(_inp: usize){}
+#[tracing::instrument(name = "Async test subscriber")]
+pub async fn async_test(_inp: usize) {}

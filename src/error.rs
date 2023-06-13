@@ -5,5 +5,5 @@ pub enum GenericError {
     #[error("StaticError")]
     StaticError(&'static str),
     #[error("TomlError")]
-    TomlError(#[from] toml::de::Error)
+    TomlError(#[from] toml::de::Error),
 }
