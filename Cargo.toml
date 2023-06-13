@@ -10,9 +10,11 @@ tokio = { version = "1", features = ["full"] }
 thiserror = "1"
 toml = "0"
 tracing = { version = "0", features = ["log"] }
+tracing-subscriber = { version = "0", features = ["registry", "env-filter"] }
+tracing-bunyan-formatter = "0"
+tracing-log = "0.1.3"
 rayon = "1"
 clap = "4"
-env_logger = "0"
 dotenvy = { version = "0.15.7", features = ["clap"] }
 
 [lib]
