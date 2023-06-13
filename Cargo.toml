@@ -15,7 +15,8 @@ tracing-bunyan-formatter = "0"
 tracing-log = "0.1.3"
 rayon = "1"
 clap = { version = "4", features = ["derive"] }
-dotenvy = { version = "0.15.7", features = ["clap"] }
+dotenvy = { version = "0", features = ["clap"] }
+secrecy = { version = "0", features = ["serde"] }
 
 [lib]
 path = "src/lib.rs"
