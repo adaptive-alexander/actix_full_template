@@ -1,4 +1,4 @@
-use template::logging::{get_subscriber,init_subscriber};
+use template::prelude::*;
 use clap::Parser;
 
 #[derive(Parser, Debug)]

@@ -1,5 +1,7 @@
 //! Crate prelude
 
+
+pub use crate::logging::*;
 pub use crate::error::GenericError;
 pub use std::format as f;
 
