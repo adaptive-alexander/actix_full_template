@@ -5,7 +5,8 @@ use clap::Parser;
 #[command(author, version, about, long_about = None)]
 struct Args {}
 
-fn main() {
+#[tokio::main]
+async fn main() {
     let subscriber = get_subscriber("template".into(), "info".into());
     init_subscriber(subscriber);
 
