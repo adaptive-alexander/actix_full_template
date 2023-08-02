@@ -1,5 +1,6 @@
 debug/
 target/
+benches/
 
 # Remove for library
 Cargo.lock

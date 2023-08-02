@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use serde::Deserialize;
 
-fn read_config() -> Result<Config> {
+pub fn read_config() -> Result<Config> {
     let toml_s =
         std::fs::read_to_string("config.toml").expect("Missing config file config.toml in root.");
     match toml::from_str::<Config>(&toml_s) {
@@ -11,4 +11,4 @@ fn read_config() -> Result<Config> {
 }
 
 #[derive(Deserialize)]
-struct Config {}
+pub struct Config {}

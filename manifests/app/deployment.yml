@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+  namespace: app
+  labels:
+    app: app-api
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: app-api
+  template:
+    metadata:
+      namespace: app
+      labels:
+        app: app-api
+    spec:
+      containers:
+        - name: app-backend
+          image: ghcr.io/mats/app:latest
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: mongodb-config
+          # kubectl create secret generic mongodb-pass --from-literal=mongodb-pass='coolpass'
+          env:
+            - name: MONGODB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-pass
+                  key: mongodb-pass
+          readinessProbe:
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 10
+            successThreshold: 2
+            failureThreshold: 10
+            httpGet:
+              scheme: HTTP
+              port: 8080
+              path: /health

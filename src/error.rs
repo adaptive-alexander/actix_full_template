@@ -6,4 +6,6 @@ pub enum GenericError {
     StaticError(&'static str),
     #[error("TomlError")]
     TomlError(#[from] toml::de::Error),
+    #[error("MDBError")]
+    MDBError(#[from] mongodb::error::Error)
 }

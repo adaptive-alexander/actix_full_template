@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: cluster-issuer
+    acme.cert-manager.io/http01-edit-in-place: "true"
+    kubernetes.io/ingress.global-static-ip-name: app-api-ip
+    networking.gke.io/v1beta1.FrontendConfig: app-api-frontend-config
+  name: app-api-ingress
+  namespace: app
+  labels:
+    app: app-api
+spec:
+  tls:
+    - hosts:
+        - api.alexander.hyll.nu
+      secretName: app-api-cert
+  rules:
+    - host: api.alexander.hyll.nu
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: app-api-service
+                port:
+                  number: 80
