@@ -19,7 +19,6 @@ COPY . .
 # Build app
 RUN cargo install --path .
 
-
 # Stage 4 - deploy
 # use google distroless as runtime image (non-root user)
 FROM gcr.io/distroless/cc-debian11:nonroot

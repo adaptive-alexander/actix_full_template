@@ -4,6 +4,7 @@ mod error;
 mod logging;
 pub mod prelude;
 mod tests;
+mod handlers;
 
 use actix_cors::Cors;
 use actix_web::middleware::Logger;
@@ -11,6 +12,7 @@ use actix_web::web::Data;
 use actix_web::{App, HttpServer};
 use clap::Parser;
 use tracing::log::info;
+use crate::prelude::*;
 
 pub fn sync_test(_inp: &str) {}
 
