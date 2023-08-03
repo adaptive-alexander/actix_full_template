@@ -12,6 +12,7 @@ use actix_web::web::Data;
 use actix_web::{App, HttpServer};
 use actix_web::dev::Server;
 use clap::Parser;
+use std::net::TcpListener;
 use tracing::log::info;
 use crate::prelude::*;
 
@@ -20,7 +21,11 @@ pub fn sync_test(_inp: &str) {}
 #[tracing::instrument(name = "Async test subscriber")]
 pub async fn async_test(_inp: usize) {}
 
-pub async fn run() -> std::io::Result<Server> {
+#[derive(Parser, Debug)]
+#[command(author, version, about, long_about = None)]
+struct Args {}
+
+pub async fn run(listener: TcpListener) -> std::io::Result<Server> {
     // Tracing, used for instrumenting spans
     let subscriber = get_subscriber("template".into(), "info".into());
     init_subscriber(subscriber);
@@ -34,9 +39,6 @@ pub async fn run() -> std::io::Result<Server> {
     // Clap and example info log
     tracing::info!("Parsing args");
     let _args: Args = Args::parse();
-
-    let port = 8080;
-    info!("Server starting on port {}", port);
 
     // Database connection
     let db_pool = get_db_pool().await.expect("Failed getting database pool");
@@ -58,6 +60,6 @@ pub async fn run() -> std::io::Result<Server> {
     })
     // Can be set higher if more resources are available. It unset defaults to nr of cores.
     .workers(2)
-    .bind(("0.0.0.0", port))? // Automatically bind to localhost:$port
+    .listen(listener)? // Automatically bind to localhost:$port
     .run())
 }
