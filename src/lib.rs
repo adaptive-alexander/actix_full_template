@@ -10,6 +10,7 @@ use actix_cors::Cors;
 use actix_web::middleware::Logger;
 use actix_web::web::Data;
 use actix_web::{App, HttpServer};
+use actix_web::dev::Server;
 use clap::Parser;
 use tracing::log::info;
 use crate::prelude::*;
@@ -19,7 +20,7 @@ pub fn sync_test(_inp: &str) {}
 #[tracing::instrument(name = "Async test subscriber")]
 pub async fn async_test(_inp: usize) {}
 
-pub async fn run() -> std::io::Result<()> {
+pub async fn run() -> std::io::Result<Server> {
     // Tracing, used for instrumenting spans
     let subscriber = get_subscriber("template".into(), "info".into());
     init_subscriber(subscriber);
@@ -40,7 +41,7 @@ pub async fn run() -> std::io::Result<()> {
     // Database connection
     let db_pool = get_db_pool().await.expect("Failed getting database pool");
 
-    HttpServer::new(move || {
+    Ok(HttpServer::new(move || {
         App::new()
             // Register database connection as app data, this lets us get access to the pool via extractors
             .app_data(Data::new(db_pool.clone()))
@@ -58,6 +59,5 @@ pub async fn run() -> std::io::Result<()> {
     // Can be set higher if more resources are available. It unset defaults to nr of cores.
     .workers(2)
     .bind(("0.0.0.0", port))? // Automatically bind to localhost:$port
-    .run()
-    .await
+    .run())
 }
